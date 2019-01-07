@@ -128,13 +128,13 @@ span.ivu-date-picker-cells-cell {
     height: 42px !important;
 }
 
-span.ivu-date-picker-cells-cell em {
-    width: 42px !important;
-    height: 42px !important;
-    line-height: 42px !important;
+.ivu-date-picker-cells .ivu-date-picker-cells-header span {
+    width: 38px !important;
 }
 
-.ivu-date-picker-cells span {
-    width: 38px;
+span.ivu-date-picker-cells-cell em {
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 42px !important;
 }
 </style>

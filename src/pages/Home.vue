@@ -105,10 +105,31 @@
     float: left;
 }
 
+.layout-icon2 {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
 .layout-text {
     text-align: center;
     height: 55px;
     line-height: 55px;
+}
+
+.hc-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow: scroll;
+}
+
+.ivu-layout-sider {
+    height: 100%;
 }
 </style>
 <template>
@@ -119,6 +140,7 @@
                     <!-- fdsd -->
                     <Icon class="layout-icon" type="ios-arrow-back" size='40' color='ccc' />
                     <div class="layout-text">标题</div>
+                    <Icon v-show="!modal1" @click="modal1=true" class="layout-icon2" size='40' color='ccc' type="navicon-round"></Icon>
                 </div>
                 <div class="layout-content">
                     <div class="layout-content-main">
@@ -128,19 +150,42 @@
             </i-col>
         </Row>
 
-        <Modal v-model="modal1" title="修改密码" @on-ok.prevent="comfirmModifyPS" @on-cancel="cancel">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-                <Form-item label="原密码" prop="oldPassword">
-                    <Input v-model="formValidate.oldPassword" placeholder="请输入原始密码"></Input>
-                </Form-item>
-                <Form-item label="新密码" prop="newPassword">
-                    <Input v-model="formValidate.newPassword" placeholder="请输入新密码"></Input>
-                </Form-item>
-                <Form-item label="确认新密码" prop="resetPassword">
-                    <Input v-model="formValidate.resetPassword" placeholder="请再次输入新密码"></Input>
-                </Form-item>
-            </Form>
-        </Modal>
+        <!-- <Modal v-model="modal1" @on-ok.prevent="comfirmModifyPS" @on-cancel="cancel">
+                                                                                                            fsdsdf
+                                                                                                        </Modal> -->
+        <div v-show='modal1' class="hc-modal" @click="modal1=false">
+            <Sider hide-trigger :style="{background: '#fff'}">
+                <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
+                    <Submenu name="1">
+                        <template slot="title">
+                            <Icon type="ios-navigate"></Icon>
+                            Item 1
+                        </template>
+                        <MenuItem name="1-1">Option 1</MenuItem>
+                        <MenuItem name="1-2">Option 2</MenuItem>
+                        <MenuItem name="1-3">Option 3</MenuItem>
+                    </Submenu>
+                    <Submenu name="2">
+                        <template slot="title">
+                            <Icon type="ios-keypad"></Icon>
+                            Item 2
+                        </template>
+                        <MenuItem @click.native="popMenu" name="2-1">Option 1</MenuItem>
+                        <MenuItem name="2-2">Option 2</MenuItem>
+                    </Submenu>
+                    <Submenu name="3">
+                        <template slot="title">
+                            <Icon type="ios-analytics"></Icon>
+                            Item 3
+                        </template>
+                        <MenuItem name="3-1">Option 1</MenuItem>
+                        <MenuItem name="3-2">Option 2</MenuItem>
+                    </Submenu>
+                </Menu>
+            </Sider>
+            <Icon @click="modal1=true" :style="{'transform':modal1?'rotate(90deg)':'rotate(0deg)'}" style="color: #fff;transform: rotate(90deg);transition: all .5s;" class="layout-icon2" size='40' color='ccc' type="navicon-round"></Icon>
+        </div>
+
     </div>
     <!-- 修改密码 模态框 -->
 
@@ -192,6 +237,10 @@ export default {
         }
     },
     methods: {
+        popMenu() {
+            // alert(90)
+            this.$router.push('/')
+        },
         toggleClick() {
             if (this.spanLeft === 5) {
                 this.spanLeft = 1;
